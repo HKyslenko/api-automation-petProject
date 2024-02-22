@@ -1,0 +1,12 @@
+{
+  "users": "/users",
+  "userById": "/users/{USER_ID}",
+  "pets": "/pets",
+  "petById": "/pets/{PET_ID}",
+  "orders": "/orders",
+  "orderById": "/orders/{ORDER_ID}",
+  "categories": "/categories",
+  "categoryById": "/categories/{CATEGORY_ID}",
+  "tags": "/tags",
+  "tagById": "/tags/{TAG_ID}"
+}
