@@ -6,6 +6,8 @@ import org.example.DTOs.Category;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -15,6 +17,8 @@ public class CategoryTests {
     private static Category category;
     private final String CATEGORY_URL = "categories";
     public final String CATEGORY_BY_ID = "categoryById";
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @BeforeClass
     public static void setupData() {
@@ -34,6 +38,7 @@ public class CategoryTests {
 
     @Test
     public void testGetCategory() throws IOException {
+        logger.info("Start test");
         Response response = getItems(CATEGORY_URL);
         response.then().log().all();
         Assert.assertEquals(response.statusCode(), 200);
