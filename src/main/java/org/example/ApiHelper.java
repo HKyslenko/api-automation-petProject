@@ -13,8 +13,8 @@ public class ApiHelper {
 
     private static final String BASE_URL = "http://localhost:8080";
 
-    public static String readFileToString(String filePath) throws IOException {
-        byte[] encodedBytes = Files.readAllBytes(Paths.get(filePath));
+    private static String readFileToString() throws IOException {
+        byte[] encodedBytes = Files.readAllBytes(Paths.get("src/test/resources/json/endpoints.json"));
         return new String(encodedBytes);
     }
 
@@ -22,7 +22,7 @@ public class ApiHelper {
         Gson gson = new Gson();
         Type type = new TypeToken<Map<String, String>>() {}.getType();
         Map<String, String> endpoints = gson
-                .fromJson(readFileToString("src/test/resources/json/endpoints.json"), type);
+                .fromJson(readFileToString(), type);
         return BASE_URL + endpoints.get(url);
     }
 }
