@@ -1,11 +1,10 @@
 package org.example.DTOs;
 
+import lombok.Getter;
+
+@Getter
 public class Tag {
     private String name;
-
-    public String getName() {
-        return name;
-    }
 
     public static class TagBuilder {
         private String name;

@@ -13,12 +13,12 @@ import static org.example.steps.BaseSteps.*;
 
 public class UserTests {
     private static User user;
+    private static final Faker faker = new Faker();
     private final String USER_URL = "users";
     private final String USER_BY_ID = "userById";
 
     @BeforeClass
     public static void setupData() {
-        Faker faker = new Faker();
         user = new User.UserBuilder()
                 .address(faker.address().fullAddress())
                 .email(faker.internet().emailAddress())
@@ -33,6 +33,15 @@ public class UserTests {
         response.then().log().all();
         Assert.assertEquals(response.statusCode(), 201);
         Assert.assertEquals(response.jsonPath().get("message"), "User created successfully");
+    }
+
+    @Test
+    public void testNegativePostUser() throws IOException {
+        User user = new User.UserBuilder().build();
+        Response response = addItem(USER_URL, user);
+        response.then().log().all();
+        Assert.assertEquals(response.statusCode(), 400);
+        Assert.assertEquals(response.jsonPath().get("message"), "Missing required field: username");
     }
 
     @Test
@@ -52,6 +61,19 @@ public class UserTests {
     }
 
     @Test
+    public void testNegativeUpdateUser() throws IOException {
+        int lastUserId = getItems(USER_URL).jsonPath().getInt("last().id");
+        User user = new User.UserBuilder()
+                .email(faker.name().name())
+                .build();
+
+        Response response = updateItemById(USER_BY_ID, user, lastUserId);
+        response.then().log().all();
+        Assert.assertEquals(response.statusCode(), 400);
+        Assert.assertEquals(response.jsonPath().get("message"), "Invalid email format");
+    }
+
+    @Test
     public void testGetUserById() throws IOException {
         int lastUserId = getItems(USER_URL).jsonPath().getInt("last().id");
         Response response = getItemById(USER_BY_ID, lastUserId);
@@ -61,10 +83,26 @@ public class UserTests {
     }
 
     @Test
+    public void testNegativeGetUserById() throws IOException {
+        Response response = getItemById(USER_BY_ID, 0);
+        response.then().log().all();
+        Assert.assertEquals(response.statusCode(), 404);
+        Assert.assertEquals(response.jsonPath().get("error"), "User not found");
+    }
+
+    @Test
     public void testDeleteUserById() throws IOException {
         int lastUserId = getItems(USER_URL).jsonPath().getInt("last().id");
         Response response = deleteItemById(USER_BY_ID, lastUserId);
         response.then().log().all();
         Assert.assertEquals(response.statusCode(), 204);
+    }
+
+    @Test
+    public void testNegativeDeleteUserById() throws IOException {
+        Response response = deleteItemById(USER_BY_ID, 0);
+        response.then().log().all();
+        Assert.assertEquals(response.statusCode(), 404);
+        Assert.assertEquals(response.jsonPath().get("message"), "User not found");
     }
 }
