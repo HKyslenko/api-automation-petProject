@@ -1,27 +1,14 @@
 package org.example.DTOs;
 
+import lombok.Getter;
+
+@Getter
 public class User {
 
     private String username;
     private String email;
     private String phone;
     private String address;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
 
     public static class UserBuilder {
         private String username;

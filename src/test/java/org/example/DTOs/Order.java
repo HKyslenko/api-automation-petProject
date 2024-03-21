@@ -1,31 +1,14 @@
 package org.example.DTOs;
 
+import lombok.Getter;
+
+@Getter
 public class Order {
     private int pet_id;
     private int quantity;
     private String shipDate;
     private String status;
     private boolean complete;
-
-    public int getPet_id() {
-        return pet_id;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public String getShipDate() {
-        return shipDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public boolean isComplete() {
-        return complete;
-    }
 
     public static class OrderBuilder {
         private int pet_id;
