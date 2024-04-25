@@ -8,5 +8,6 @@
   "categories": "/categories",
   "categoryById": "/categories/{CATEGORY_ID}",
   "tags": "/tags",
-  "tagById": "/tags/{TAG_ID}"
+  "tagById": "/tags/{TAG_ID}",
+  "complexJson": "/complex-json-file"
 }
